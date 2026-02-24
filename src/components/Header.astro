@@ -1,0 +1,151 @@
+---
+const menuItems = [
+    { name: "Ana Sayfa", href: "/" },
+    { name: "Tedaviler", href: "/tedaviler" },
+    { name: "Son Haberler", href: "/guncel-haberler" },
+    { name: "Göz Testi", href: "/goz-testi" },
+    { name: "İletişim", href: "/iletisim" },
+];
+
+const currentPath = Astro.url.pathname;
+
+function isActive(href: string): boolean {
+    if (href === "/") return currentPath === "/";
+    return currentPath.startsWith(href);
+}
+---
+
+<header class="header sticky">
+    <div class="container header-content">
+        <a href="/" class="logo">
+            <img
+                src="/images/logo-transparent.png"
+                alt="Göz Tedavileri Logo"
+                class="logo-img"
+            />
+        </a>
+        <nav class="nav">
+            <ul class="nav-list">
+                {
+                    menuItems.map((item) => (
+                        <li>
+                            <a
+                                href={item.href}
+                                class={`nav-link ${isActive(item.href) ? "active" : ""}`}
+                            >
+                                {item.name}
+                            </a>
+                        </li>
+                    ))
+                }
+            </ul>
+            <button class="menu-toggle" aria-label="Menu">
+                <span></span>
+                <span></span>
+                <span></span>
+            </button>
+        </nav>
+    </div>
+</header>
+
+<style>
+    .header {
+        top: 0;
+        z-index: 1000;
+        padding: 0.75rem 0;
+        background: #ffffff;
+        border-bottom: 1px solid #e8ecf0;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+        transition: var(--transition-fast);
+    }
+
+    .header-content {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+    }
+
+    .logo-img {
+        height: 60px;
+        width: auto;
+        display: block;
+        image-rendering: -webkit-optimize-contrast;
+    }
+
+    .nav-list {
+        display: flex;
+        gap: 2rem;
+        align-items: center;
+    }
+
+    .nav-link {
+        font-weight: 500;
+        font-size: 0.95rem;
+        color: #444;
+        position: relative;
+        padding: 0.5rem 0;
+    }
+
+    .nav-link::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 0;
+        height: 2px;
+        background-color: var(--accent-green);
+        transition: var(--transition-fast);
+        border-radius: 2px;
+    }
+
+    .nav-link:hover {
+        color: var(--primary-blue);
+    }
+
+    .nav-link:hover::after,
+    .nav-link.active::after {
+        width: 100%;
+    }
+
+    .nav-link.active {
+        color: var(--primary-blue);
+        font-weight: 600;
+    }
+
+    .menu-toggle {
+        display: none;
+        flex-direction: column;
+        gap: 5px;
+        background: none;
+        border: none;
+        cursor: pointer;
+    }
+
+    .menu-toggle span {
+        width: 25px;
+        height: 3px;
+        background-color: var(--primary-blue);
+        border-radius: 2px;
+    }
+
+    @media (max-width: 768px) {
+        .nav-list {
+            display: none;
+        }
+        .menu-toggle {
+            display: flex;
+        }
+        .logo-img {
+            height: 48px;
+        }
+    }
+</style>

@@ -1,0 +1,170 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import VisionLab from "../components/VisionLab";
+import { Info } from "lucide-react";
+---
+
+<Layout
+    title="Gözünü Test Et | İnteraktif Görme Simülasyonu"
+    description="Glokom ve Katarakt gibi göz hastalıklarının görüşünüzü nasıl etkilediğini interaktif simülatörümüzle deneyimleyin."
+    bodyClass="dark-theme"
+>
+    <Header />
+
+    <main class="vision-lab-page">
+        <section class="lab-hero">
+            <div class="container">
+                <div class="hero-content center fade-in">
+                    <span class="status-badge">AI Sürümü Aktif</span>
+                    <h1>
+                        Göz Sağlığınızı <span class="gradient-text"
+                            >Profesyonel</span
+                        > Seviyede Analiz Edin
+                    </h1>
+                    <p>
+                        Türkiye'nin en gelişmiş interaktif görme laboratuvarına
+                        hoş geldiniz. Modern simülatörler ve klinik testlerle
+                        görüşünüzü derinlemesine keşfedin.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="lab-workspace">
+            <div class="container-fluid">
+                <VisionLab client:load />
+            </div>
+        </section>
+
+        <section class="disclaimer-section">
+            <div class="container">
+                <div class="disclaimer-grid">
+                    <div class="disclaimer-card glass warning">
+                        <Info className="icon" />
+                        <div class="text">
+                            <h3>Tıbbi Sorumluluk Reddi</h3>
+                            <p>
+                                Bu platform tarafından sunulan testler sadece
+                                eğitim ve farkındalık amaçlıdır. Kesinlikle
+                                tıbbi bir tanı veya teşhis niteliği taşımaz.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="disclaimer-card glass cta">
+                        <div class="text">
+                            <h3>Sorun mu Tespit Ettiniz?</h3>
+                            <p>
+                                Eğer testlerde bir bozulma veya bulanıklık
+                                yaşıyorsanız, lütfen hemen uzman kadromuzdan
+                                destek alın.
+                            </p>
+                        </div>
+                        <a href="/iletisim" class="cta-button mini"
+                            >Hemen Randevu Alın</a
+                        >
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+    <WhatsAppButton />
+</Layout>
+
+<style>
+    .vision-lab-page {
+        background: #020617;
+        min-height: 100vh;
+        overflow: hidden;
+    }
+
+    .lab-hero {
+        padding: 8rem 0 4rem;
+        background: #020617;
+    }
+
+    .status-badge {
+        display: inline-block;
+        padding: 0.4rem 1rem;
+        background: rgba(74, 222, 128, 0.1);
+        color: #4ade80;
+        border: 1px solid rgba(74, 222, 128, 0.2);
+        border-radius: 50px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 2rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+
+    .hero-content h1 {
+        font-size: 3.5rem;
+        color: white;
+        margin-bottom: 1.5rem;
+        line-height: 1.2;
+    }
+
+    .hero-content p {
+        color: rgba(255, 255, 255, 0.6);
+        max-width: 800px;
+        font-size: 1.25rem;
+    }
+
+    .container-fluid {
+        max-width: 1400px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    .disclaimer-section {
+        padding: 4rem 0 8rem;
+    }
+
+    .disclaimer-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+    }
+
+    .disclaimer-card {
+        padding: 2.5rem;
+        display: flex;
+        gap: 1.5rem;
+        align-items: flex-start;
+    }
+
+    .disclaimer-card.warning .icon {
+        color: #f59e0b;
+        flex-shrink: 0;
+    }
+
+    .disclaimer-card h3 {
+        color: white;
+        margin-bottom: 0.75rem;
+    }
+
+    .disclaimer-card p {
+        color: rgba(255, 255, 255, 0.5);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .cta-button.mini {
+        padding: 0.75rem 1.5rem;
+        font-size: 0.9rem;
+    }
+
+    @media (max-width: 992px) {
+        .disclaimer-grid {
+            grid-template-columns: 1fr;
+        }
+        .hero-content h1 {
+            font-size: 2.5rem;
+        }
+    }
+</style>

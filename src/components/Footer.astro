@@ -1,0 +1,215 @@
+---
+import {
+    Facebook,
+    Instagram,
+    Twitter,
+    Linkedin,
+    Phone,
+    Mail,
+    MapPin,
+} from "lucide-react";
+
+const treatments = [
+    { name: "LASIK Tedavisi", href: "/tedaviler/lasik" },
+    { name: "Akıllı Mercek", href: "/tedaviler/akilli-mercek" },
+    { name: "Katarakt", href: "/tedaviler/katarakt" },
+];
+
+const quickLinks = [
+    { name: "Tedaviler", href: "/tedaviler" },
+    { name: "Son Haberler", href: "/guncel-haberler" },
+    { name: "Göz Testi", href: "/goz-testi" },
+];
+---
+
+<footer class="footer">
+    <div class="container footer-grid">
+        <!-- Col 1: Brand & Socials -->
+        <div class="footer-col brand-col">
+            <div class="logo white">
+                <img
+                    src="/images/logo-white.png"
+                    alt="Göz Tedavileri Logo"
+                    class="logo-img"
+                />
+            </div>
+            <div class="social-icons">
+                <a href="#" aria-label="Facebook"><Facebook size={20} /></a>
+                <a href="#" aria-label="Instagram"><Instagram size={20} /></a>
+                <a href="#" aria-label="Twitter"><Twitter size={20} /></a>
+                <a href="#" aria-label="LinkedIn"><Linkedin size={20} /></a>
+            </div>
+        </div>
+
+        <!-- Col 2: Quick Links -->
+        <div class="footer-col">
+            <h3>Hızlı Bağlantılar</h3>
+            <ul class="footer-links">
+                {
+                    quickLinks.map((link) => (
+                        <li>
+                            <a href={link.href}>{link.name}</a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+
+        <!-- Col 3: Treatments -->
+        <div class="footer-col">
+            <h3>Popüler Tedaviler</h3>
+            <ul class="footer-links">
+                {
+                    treatments.map((t) => (
+                        <li>
+                            <a href={t.href}>{t.name}</a>
+                        </li>
+                    ))
+                }
+            </ul>
+        </div>
+
+        <!-- Col 4: Contact -->
+        <div class="footer-col contact-col">
+            <h3>İletişim</h3>
+            <ul class="contact-info">
+                <li>
+                    <Phone size={18} />
+                    <a href="tel:+905459968908">+90 545 996 89 08</a>
+                </li>
+                <li>
+                    <Mail size={18} />
+                    <a href="mailto:info@goztedavileri.com"
+                        >info@goztedavileri.com</a
+                    >
+                </li>
+                <li>
+                    <MapPin size={18} />
+                    <span>İzmir, Türkiye</span>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div class="container">
+            <p>
+                &copy; {new Date().getFullYear()} GözTedavileri.com. Tüm hakları saklıdır.
+            </p>
+        </div>
+    </div>
+</footer>
+
+<style>
+    .footer {
+        background-color: var(--primary-blue);
+        color: var(--white);
+        padding: 4rem 0 2rem;
+        margin-top: 4rem;
+    }
+
+    .footer-grid {
+        display: grid;
+        grid-template-columns: 1.2fr 0.8fr 1fr 1.2fr;
+        gap: 3rem;
+    }
+
+    .footer-col h3 {
+        color: var(--white);
+        margin-bottom: 1.8rem;
+        font-size: 1.15rem;
+        font-weight: 700;
+        position: relative;
+        padding-bottom: 0.6rem;
+    }
+
+    .footer-col h3::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 30px;
+        height: 2px;
+        background-color: var(--accent-green);
+    }
+
+    .brand-col .logo-img {
+        height: 70px;
+        width: auto;
+        margin-bottom: 1rem;
+    }
+
+    .brand-desc {
+        font-size: 0.9rem;
+        opacity: 0.8;
+        margin-bottom: 1.8rem;
+        line-height: 1.6;
+        max-width: 250px;
+    }
+
+    .social-icons {
+        display: flex;
+        gap: 1rem;
+    }
+
+    .social-icons a {
+        color: var(--white);
+        opacity: 0.8;
+        transition: var(--transition-fast);
+    }
+
+    .social-icons a:hover {
+        opacity: 1;
+        color: var(--accent-green);
+        transform: translateY(-3px);
+    }
+
+    .footer-links li {
+        margin-bottom: 0.8rem;
+    }
+
+    .footer-links a {
+        font-size: 0.95rem;
+        opacity: 0.8;
+    }
+
+    .footer-links a:hover {
+        opacity: 1;
+        padding-left: 5px;
+        color: var(--accent-green);
+    }
+
+    .contact-info li {
+        display: flex;
+        align-items: center;
+        gap: 0.8rem;
+        margin-bottom: 1rem;
+        font-size: 0.95rem;
+        opacity: 0.8;
+    }
+
+    .contact-info a:hover {
+        opacity: 1;
+        color: var(--accent-green);
+    }
+
+    .footer-bottom {
+        border-top: 1px solid rgba(255, 255, 255, 0.1);
+        margin-top: 3rem;
+        padding-top: 2rem;
+        text-align: center;
+        font-size: 0.85rem;
+        opacity: 0.6;
+    }
+
+    @media (max-width: 992px) {
+        .footer-grid {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 480px) {
+        .footer-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

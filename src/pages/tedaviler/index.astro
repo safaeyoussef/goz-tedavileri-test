@@ -1,0 +1,88 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import TreatmentCard from "../../components/TreatmentCard.astro";
+import { treatments } from "../../data/treatments";
+---
+
+<Layout
+    title="Göz Tedavileri ve Operasyonları"
+    description="İzmir'deki kliniğimizde uygulanan 21 farklı göz tedavisi ve cerrahi yöntem hakkında detaylı bilgi."
+>
+    <Header />
+
+    <main>
+        <section class="treatments-hero">
+            <div class="container center">
+                <h1>Tüm Göz Tedavileri</h1>
+                <p>
+                    A'dan Z'ye, uzmanlık alanımız olan tüm cerrahi ve medikal
+                    tedavi yöntemlerini keşfedin.
+                </p>
+            </div>
+        </section>
+
+        <section class="all-treatments">
+            <div class="container">
+                <div class="treatments-grid">
+                    {
+                        treatments.map((item) => (
+                            <TreatmentCard
+                                title={item.title}
+                                description={item.description}
+                                href={`/tedaviler/${item.slug}`}
+                                icon={item.icon}
+                            />
+                        ))
+                    }
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <Footer />
+    <WhatsAppButton />
+</Layout>
+
+<style>
+    .treatments-hero {
+        padding: 6rem 0 3rem;
+        background-color: var(--secondary-blue);
+        text-align: center;
+    }
+
+    .treatments-hero h1 {
+        margin-bottom: 1.5rem;
+    }
+
+    .treatments-hero p {
+        font-size: 1.2rem;
+        color: #666;
+        max-width: 700px;
+        margin: 0 auto;
+    }
+
+    .all-treatments {
+        padding: 4rem 0 8rem;
+    }
+
+    .treatments-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 2rem;
+    }
+
+    @media (max-width: 992px) {
+        .treatments-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
+    }
+
+    @media (max-width: 576px) {
+        .treatments-grid {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

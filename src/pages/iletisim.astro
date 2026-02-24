@@ -1,0 +1,163 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Header from "../components/Header.astro";
+import Footer from "../components/Footer.astro";
+import WhatsAppButton from "../components/WhatsAppButton.astro";
+import ApplicationForm from "../components/ApplicationForm.astro";
+import { Phone, Mail, MapPin, Clock } from "lucide-react";
+---
+
+<Layout
+    title="İletişim | İzmir Göz Tedavileri Merkezi"
+    description="Göz tedavileri hakkında bilgi almak veya randevu oluşturmak için bizimle iletişime geçin. İzmir'deki merkezimize bekliyoruz."
+>
+    <Header />
+
+    <main class="contact-page">
+        <section class="contact-hero">
+            <div class="container">
+                <header class="page-header center">
+                    <h1>Bizimle İletişime Geçin</h1>
+                    <p>
+                        Göz sağlığınız hakkında merak ettiğiniz her şey için
+                        uzman ekibimiz yanınızda.
+                    </p>
+                </header>
+            </div>
+        </section>
+
+        <div class="container">
+            <div class="contact-grid">
+                <div class="contact-info-cards">
+                    <div class="info-card glass">
+                        <Phone className="icon" />
+                        <div class="text">
+                            <h3>Telefon / WhatsApp</h3>
+                            <p>
+                                <a href="tel:+905459968908">+90 545 996 89 08</a
+                                >
+                            </p>
+                            <span>7/24 WhatsApp Desteği</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card glass">
+                        <Mail className="icon" />
+                        <div class="text">
+                            <h3>E-Posta</h3>
+                            <p>
+                                <a href="mailto:info@goztedavileri.com"
+                                    >info@goztedavileri.com</a
+                                >
+                            </p>
+                            <span>Hızlı Dönüş Garantisi</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card glass">
+                        <MapPin className="icon" />
+                        <div class="text">
+                            <h3>Adres</h3>
+                            <p>İzmir, Türkiye</p>
+                            <span>Merkezi Lokasyon</span>
+                        </div>
+                    </div>
+
+                    <div class="info-card glass">
+                        <Clock className="icon" />
+                        <div class="text">
+                            <h3>Çalışma Saatleri</h3>
+                            <p>Pzt - Cmt: 09:00 - 18:00</p>
+                            <span>Pazar: Kapalı</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="contact-form-wrapper">
+                    <ApplicationForm />
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <Footer />
+    <WhatsAppButton />
+</Layout>
+
+<style>
+    .contact-hero {
+        background-color: var(--secondary-blue);
+        padding: 6rem 0 3rem;
+        text-align: center;
+    }
+
+    .contact-page {
+        padding-bottom: 4rem;
+    }
+
+    .contact-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 4rem;
+        margin-top: 4rem;
+    }
+
+    .contact-info-cards {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+    }
+
+    .info-card {
+        padding: 2rem;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        transition: var(--transition-fast);
+    }
+
+    .info-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--primary-blue);
+    }
+
+    .info-card .icon {
+        color: var(--accent-green);
+        width: 32px;
+        height: 32px;
+    }
+
+    .info-card h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+    }
+
+    .info-card p {
+        font-size: 1rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        margin-bottom: 0.3rem;
+    }
+
+    .info-card span {
+        font-size: 0.85rem;
+        color: #888;
+    }
+
+    @media (max-width: 992px) {
+        .contact-grid {
+            grid-template-columns: 1fr;
+            gap: 3rem;
+        }
+        .contact-info-cards {
+            grid-template-columns: 1fr 1fr;
+        }
+    }
+
+    @media (max-width: 576px) {
+        .contact-info-cards {
+            grid-template-columns: 1fr;
+        }
+    }
+</style>

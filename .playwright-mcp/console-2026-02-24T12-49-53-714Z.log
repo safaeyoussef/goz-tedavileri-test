@@ -1,0 +1,2 @@
+[   40865ms] [ERROR] Access to image at 'http://localhost:4321/images/logo.png' from origin 'null' has been blocked by CORS policy: The request client is not a secure context and the resource is in more-private address space `loopback`. @ about:blank:0
+[   40869ms] [ERROR] Failed to load resource: net::ERR_FAILED @ http://localhost:4321/images/logo.png:0

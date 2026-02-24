@@ -1,0 +1,249 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+  --primary-blue: #0056B3;
+  --secondary-blue: #E3F2FD;
+  --accent-green: #00C853;
+  --white: #ffffff;
+  --black: #1a1a1a;
+  --gray: #f8f9fa;
+  --text-main: #333333;
+  --whatsapp-green: #25D366;
+
+  --transition-slow: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-fast: 0.2s ease-in-out;
+
+  --glass-bg: rgba(255, 255, 255, 0.8);
+  --glass-border: rgba(255, 255, 255, 0.3);
+  --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  font-family: 'Inter', sans-serif;
+  scroll-behavior: smooth;
+  background-color: var(--secondary-blue);
+  color: var(--text-main);
+  line-height: 1.6;
+}
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: var(--primary-blue);
+  line-height: 1.2;
+}
+
+h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+}
+
+h2 {
+  font-size: 2rem;
+  font-weight: 600;
+}
+
+h3 {
+  font-size: 1.5rem;
+  font-weight: 500;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+  transition: var(--transition-fast);
+}
+
+ul {
+  list-style: none;
+}
+
+/* Glassmorphism utility */
+.glass {
+  background: var(--glass-bg);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid var(--glass-border);
+  box-shadow: var(--glass-shadow);
+}
+
+/* Animations using Framer Motion classes or global animations */
+.fade-in {
+  animation: fadeIn 0.8s ease-out forwards;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* CTA Button */
+.cta-button {
+  display: inline-block;
+  background-color: var(--accent-green);
+  color: var(--white);
+  padding: 0.8rem 1.5rem;
+  border-radius: 8px;
+  font-weight: 600;
+  text-align: center;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 4px 6px rgba(0, 200, 83, 0.2);
+}
+
+.cta-button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 200, 83, 0.3);
+  filter: brightness(1.1);
+}
+
+/* Container */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 1.5rem;
+}
+
+/* Section Commons */
+section {
+  padding: 6rem 0;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  margin-bottom: 3.5rem;
+}
+
+.section-header.center {
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.section-header h2 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--primary-blue);
+  margin-bottom: 1rem;
+  letter-spacing: -0.02em;
+}
+
+.section-header p {
+  color: #666;
+  font-size: 1.15rem;
+  max-width: 650px;
+  line-height: 1.6;
+}
+
+@media (max-width: 768px) {
+  .section-header h2 {
+    font-size: 2rem;
+  }
+
+  .section-header p {
+    font-size: 1rem;
+  }
+
+  section {
+    padding: 4rem 0;
+  }
+}
+
+@media (max-width: 768px) {
+  h1 {
+    font-size: 2rem;
+  }
+
+  h2 {
+    font-size: 1.75rem;
+  }
+
+  h3 {
+    font-size: 1.25rem;
+  }
+}
+
+/* ── Global Header Styles (applied to all pages) ── */
+.header {
+  background: #ffffff !important;
+  border-bottom: 1px solid #e8ecf0;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.06);
+}
+
+/* Dark Theme Overrides (Localized to specific pages) */
+.dark-theme {
+  --secondary-blue: #020617;
+  --text-main: rgba(255, 255, 255, 0.7);
+}
+
+.dark-theme h1,
+.dark-theme h2,
+.dark-theme h3,
+.dark-theme h4,
+.dark-theme h5,
+.dark-theme h6 {
+  color: #ffffff;
+}
+
+.dark-theme .section-header h2 {
+  color: #ffffff;
+}
+
+.dark-theme .section-header p {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.dark-theme .logo {
+  color: #ffffff;
+}
+
+.dark-theme .nav-link {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.dark-theme .nav-link:hover {
+  color: #ffffff;
+}
+
+/* Header remains light on dark-theme pages */
+.dark-theme .header .nav-link {
+  color: #444;
+}
+
+.dark-theme .header .nav-link:hover,
+.dark-theme .header .nav-link.active {
+  color: var(--primary-blue);
+}
+
+.dark-theme .footer {
+  background-color: #020617;
+  border-top: 1px solid rgba(255, 255, 255, 0.05);
+}

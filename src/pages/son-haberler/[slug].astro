@@ -1,0 +1,278 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import { news } from "../../data/news";
+import { Calendar, Clock, User, ChevronLeft } from "lucide-react";
+import { marked } from "marked";
+
+export async function getStaticPaths() {
+    return news.map((item) => ({
+        params: { slug: item.slug },
+        props: { item },
+    }));
+}
+
+const { item } = Astro.props;
+const htmlContent = marked.parse(item.content);
+
+const currentIndex = news.findIndex((n) => n.slug === item.slug);
+const nextItem = news[currentIndex + 1] ?? news[0];
+---
+
+<Layout
+    title={`${item.title} | Göz Sağlığı Haberleri`}
+    description={item.excerpt}
+>
+    <Header />
+
+    <main class="blog-detail">
+        <article class="container">
+            <a href="/guncel-haberler" class="back-link">
+                <ChevronLeft className="icon" /> Haberlere Dön
+            </a>
+
+            <header class="post-header">
+                <span class="category-tag">{item.category}</span>
+                <h1>{item.title}</h1>
+                <div class="post-meta">
+                    <span class="meta-item">
+                        <Calendar className="icon" />
+                        {item.date}
+                    </span>
+                    <span class="meta-item">
+                        <Clock className="icon" />
+                        {item.readTime} okuma
+                    </span>
+                </div>
+            </header>
+
+            <div class="featured-image">
+                <img src={item.image} alt={item.title} />
+            </div>
+
+            <div class="post-content" set:html={htmlContent} />
+
+            <!-- Navigation Buttons -->
+            <div class="blog-navigation">
+                <a href="/guncel-haberler" class="nav-btn nav-btn--back">
+                    ← Bloglara Dön
+                </a>
+                <a
+                    href={`/son-haberler/${nextItem.slug}`}
+                    class="nav-btn nav-btn--next"
+                >
+                    Sonraki Yazıyı Oku →
+                </a>
+            </div>
+        </article>
+    </main>
+
+    <Footer />
+    <WhatsAppButton />
+</Layout>
+
+<style is:global>
+    html,
+    body {
+        background-color: #fff !important;
+    }
+
+    .blog-detail {
+        padding: 4rem 0 5rem;
+        background-color: #fff;
+    }
+
+    .blog-detail .container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 0 1.5rem;
+    }
+
+    .back-link {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        color: #666;
+        font-weight: 600;
+        margin-bottom: 2rem;
+        transition: color 0.3s ease;
+    }
+
+    .back-link:hover {
+        color: var(--primary-blue);
+    }
+
+    .back-link .icon {
+        width: 18px;
+        height: 18px;
+    }
+
+    .post-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .post-header .category-tag {
+        background: var(--secondary-blue);
+        color: var(--primary-blue);
+        padding: 0.4rem 1rem;
+        font-size: 0.8rem;
+        font-weight: 700;
+        border-radius: 4px;
+        display: inline-block;
+        margin-bottom: 1.5rem;
+    }
+
+    .post-header h1 {
+        font-size: 2.8rem;
+        line-height: 1.2;
+        color: var(--black);
+        margin-bottom: 1.5rem;
+    }
+
+    .post-meta {
+        display: flex;
+        gap: 2rem;
+        color: #00c853;
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+    .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .meta-item .icon {
+        width: 16px;
+        height: 16px;
+    }
+
+    .featured-image {
+        width: 100%;
+        height: 450px;
+        border-radius: 16px;
+        overflow: hidden;
+        margin-bottom: 3rem;
+    }
+
+    .featured-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    /* Content Styling - Typography Standardized as requested */
+    .post-content {
+        font-size: 1.2rem;
+        line-height: 1.8;
+        color: #333;
+    }
+
+    .post-content p {
+        margin-bottom: 1.8rem;
+    }
+
+    /* User requested: H1, H2, H3 in the same font size */
+    .post-content h1,
+    .post-content h2,
+    .post-content h3 {
+        font-size: 1.8rem; /* Uniform size as requested */
+        font-weight: 700;
+        color: var(--black);
+        margin: 2.5rem 0 1.2rem;
+        line-height: 1.3;
+    }
+
+    .post-content ul,
+    .post-content ol {
+        margin-bottom: 1.8rem;
+        padding-left: 1.5rem;
+    }
+
+    .post-content li {
+        margin-bottom: 0.8rem;
+    }
+
+    .post-content blockquote {
+        background: var(--secondary-blue);
+        padding: 2rem;
+        border-left: 6px solid var(--primary-blue);
+        border-radius: 8px;
+        font-style: italic;
+        margin: 2.5rem 0;
+        font-size: 1.3rem;
+        color: var(--primary-blue);
+    }
+
+    .post-content blockquote p {
+        margin-bottom: 0;
+    }
+
+    .post-content strong {
+        color: var(--black);
+        font-weight: 700;
+    }
+
+    /* Blog Navigation Buttons */
+    .blog-navigation {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-top: 4rem;
+        padding-top: 2rem;
+        border-top: 1px solid #e8ecf0;
+        gap: 1rem;
+    }
+
+    .nav-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.5rem;
+        padding: 0.85rem 1.75rem;
+        border-radius: 8px;
+        font-weight: 600;
+        font-size: 0.95rem;
+        transition: all 0.2s ease;
+    }
+
+    .nav-btn--back {
+        background: #f1f5f9;
+        color: #444;
+        border: 1px solid #e2e8f0;
+    }
+
+    .nav-btn--back:hover {
+        background: #e2e8f0;
+        color: var(--primary-blue);
+    }
+
+    .nav-btn--next {
+        background: var(--primary-blue);
+        color: #fff;
+        border: 1px solid transparent;
+    }
+
+    .nav-btn--next:hover {
+        background: #004499;
+        color: #fff;
+        transform: translateY(-2px);
+        box-shadow: 0 4px 12px rgba(0, 86, 179, 0.3);
+    }
+
+    @media (max-width: 768px) {
+        .post-header h1 {
+            font-size: 2rem;
+        }
+        .featured-image {
+            height: 300px;
+        }
+        .post-content h1,
+        .post-content h2,
+        .post-content h3 {
+            font-size: 1.5rem;
+        }
+    }
+</style>

@@ -1,0 +1,255 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import Header from "../../components/Header.astro";
+import Footer from "../../components/Footer.astro";
+import WhatsAppButton from "../../components/WhatsAppButton.astro";
+import ApplicationForm from "../../components/ApplicationForm.astro";
+import { treatments } from "../../data/treatments";
+import { Clock, RefreshCcw, CheckCircle2, HelpCircle } from "lucide-react";
+
+export async function getStaticPaths() {
+    return treatments.map((treatment) => ({
+        params: { slug: treatment.slug },
+        props: { treatment },
+    }));
+}
+
+const { treatment } = Astro.props;
+
+const faqs = [
+    {
+        q: "İşlem ağrılı mıdır?",
+        a: "Lokal anestezi damlaları sayesinde işlem sırasında herhangi bir ağrı hissedilmez.",
+    },
+    {
+        q: "İyileşme süreci ne kadardır?",
+        a: `Genellikle ${treatment.quickInfo.recovery} içerisinde normal hayata dönebilirsiniz.`,
+    },
+    {
+        q: "Başarı oranı nedir?",
+        a: `Bu tedavi yönteminde başarı oranımız ${treatment.quickInfo.successRate} seviyesindedir.`,
+    },
+];
+---
+
+<Layout title={treatment.title} description={treatment.description}>
+    <Header />
+
+    <main class="treatment-page">
+        <div class="container page-grid">
+            <!-- Main Content -->
+            <div class="content">
+                <nav class="breadcrumb">
+                    <a href="/">Ana Sayfa</a> / <a href="/tedaviler"
+                        >Tedaviler</a
+                    > / {treatment.title}
+                </nav>
+
+                <header class="treatment-header">
+                    <h1>{treatment.title}</h1>
+                    <p class="lead">{treatment.description}</p>
+                </header>
+
+                <section class="quick-info-grid">
+                    <div class="info-item">
+                        <Clock className="icon" />
+                        <div>
+                            <strong>İşlem Süresi</strong>
+                            <span>{treatment.quickInfo.duration}</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <RefreshCcw className="icon" />
+                        <div>
+                            <strong>İyileşme</strong>
+                            <span>{treatment.quickInfo.recovery}</span>
+                        </div>
+                    </div>
+                    <div class="info-item">
+                        <CheckCircle2 className="icon" />
+                        <div>
+                            <strong>Başarı Oranı</strong>
+                            <span>{treatment.quickInfo.successRate}</span>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="long-description">
+                    <h2>Tedavi Hakkında Detaylı Bilgi</h2>
+                    <p>
+                        {treatment.title}, modern oftalmolojinin sunduğu en
+                        güvenli ve etkili yöntemlerden biridir. İzmir'deki
+                        kliniğimizde, en son teknoloji cihazlar ve uzman
+                        cerrahlarımız eşliğinde gerçekleştirilen bu işlem,
+                        hastalarımızın yaşam kalitesini artırmayı hedefler.
+                    </p>
+                    <p>
+                        İşlem öncesinde detaylı bir göz muayenesi yapılarak, göz
+                        yapınızın bu tedaviye uygunluğu test edilir. Amacımız,
+                        her hastaya en doğru ve en güvenli çözümü sunmaktır.
+                    </p>
+                </section>
+
+                <section class="faq-section">
+                    <h2><HelpCircle /> Sıkça Sorulan Sorular</h2>
+                    <div class="faq-list">
+                        {
+                            faqs.map((item) => (
+                                <div class="faq-item">
+                                    <h3>{item.q}</h3>
+                                    <p>{item.a}</p>
+                                </div>
+                            ))
+                        }
+                    </div>
+                </section>
+            </div>
+
+            <!-- Sidebar -->
+            <aside class="sidebar">
+                <ApplicationForm />
+            </aside>
+        </div>
+    </main>
+
+    <Footer />
+    <WhatsAppButton />
+</Layout>
+
+<style>
+    .treatment-page {
+        padding: 4rem 0 4rem;
+    }
+
+    .page-grid {
+        display: grid;
+        grid-template-columns: 2fr 1fr;
+        gap: 4rem;
+    }
+
+    .breadcrumb {
+        font-size: 0.9rem;
+        color: #888;
+        margin-bottom: 1rem;
+    }
+
+    .breadcrumb a:hover {
+        color: var(--primary-blue);
+    }
+
+    .treatment-header h1 {
+        margin-bottom: 0.5rem;
+    }
+
+    .lead {
+        font-size: 1.4rem;
+        color: #555;
+        margin-bottom: 1.5rem;
+    }
+
+    .quick-info-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+        background: var(--white);
+        padding: 2rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    }
+
+    .info-item {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
+    .info-item .icon {
+        color: var(--accent-green);
+        width: 32px;
+        height: 32px;
+    }
+
+    .info-item div {
+        display: flex;
+        flex-direction: column;
+    }
+
+    .info-item strong {
+        font-size: 0.9rem;
+        color: #666;
+    }
+
+    .info-item span {
+        font-size: 1.1rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+    }
+
+    .long-description {
+        margin-bottom: 0;
+        padding: 2rem 0;
+    }
+
+    .long-description h2 {
+        margin-bottom: 1rem;
+    }
+
+    .long-description p {
+        margin-bottom: 1rem;
+        font-size: 1.1rem;
+        color: #444;
+    }
+
+    .long-description p:last-child {
+        margin-bottom: 0;
+    }
+
+    .faq-section {
+        padding: 2rem 0;
+    }
+
+    .faq-section h2 {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .faq-list {
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    .faq-item {
+        background: rgba(227, 242, 253, 0.5);
+        padding: 1.5rem;
+        border-radius: 8px;
+        border-left: 4px solid var(--primary-blue);
+    }
+
+    .faq-item h3 {
+        font-size: 1.1rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary-blue);
+    }
+
+    .faq-item p {
+        color: #555;
+        margin: 0;
+    }
+
+    @media (max-width: 992px) {
+        .page-grid {
+            grid-template-columns: 1fr;
+        }
+        .sidebar {
+            order: -1;
+        }
+        .quick-info-grid {
+            grid-template-columns: 1fr;
+            gap: 2rem;
+        }
+    }
+</style>

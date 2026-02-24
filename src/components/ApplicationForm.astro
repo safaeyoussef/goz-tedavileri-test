@@ -1,0 +1,209 @@
+---
+import { countries } from "../data/countries";
+---
+
+<div class="sticky-form glass">
+    <h3>Ücretsiz Danışma Formu</h3>
+    <p>Hemen başvurun, uzmanlarımız size en kısa sürede dönüş yapsın.</p>
+
+    <form id="treatmentForm" class="vertical-form">
+        <!-- Web3Forms Configuration -->
+        <input
+            type="hidden"
+            name="access_key"
+            value="db444f1c-6f00-4e45-b26b-394a742e51a7"
+        />
+        <input
+            type="hidden"
+            name="subject"
+            value="Yeni Tedavi Başvurusu - Göz Tedavileri"
+        />
+        <input
+            type="hidden"
+            name="from_name"
+            value="Göz Tedavileri Web Sitesi"
+        />
+        <input
+            type="checkbox"
+            name="botcheck"
+            class="hidden"
+            style="display: none;"
+        />
+
+        <div class="form-group">
+            <label for="fullName">Ad Soyad *</label>
+            <input
+                type="text"
+                id="fullName"
+                name="name"
+                placeholder="Adınız ve Soyadınız"
+                required
+            />
+        </div>
+        <div class="phone-group">
+            <div class="form-group country-code">
+                <label for="countryCode">Ülke Kodu *</label>
+                <select id="countryCode" name="country_code" required>
+                    <option value="+90">TR (+90)</option>
+                    <option value="+1">US (+1)</option>
+                    <option value="+44">UK (+44)</option>
+                    <option value="+49">DE (+49)</option>
+                    <option value="+33">FR (+33)</option>
+                    <option value="+971">UAE (+971)</option>
+                    <option value="+966">SA (+966)</option>
+                    <option value="+31">NL (+31)</option>
+                    <option value="+32">BE (+32)</option>
+                    <option value="+41">CH (+41)</option>
+                    <option value="+43">AT (+43)</option>
+                    <option value="+46">SE (+46)</option>
+                    <option value="+47">NO (+47)</option>
+                    <option value="+45">DK (+45)</option>
+                    <option value="+39">IT (+39)</option>
+                    <option value="+34">ES (+ Spain)</option>
+                    <option value="+7">RU (+7)</option>
+                    <option value="+30">GR (+30)</option>
+                    <option value="+357">CY (+357)</option>
+                    <option value="+994">AZ (+994)</option>
+                </select>
+            </div>
+            <div class="form-group phone-number">
+                <label for="phone">Telefon *</label>
+                <input
+                    type="tel"
+                    id="phone"
+                    name="phone"
+                    placeholder="555 123 4567"
+                    required
+                />
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="message">Mesajınız *</label>
+            <textarea
+                id="message"
+                name="message"
+                placeholder="Size nasıl yardımcı olabiliriz?"
+                rows="3"
+                required></textarea>
+        </div>
+        <button type="submit" class="cta-button full-width">
+            Hemen Başvuru Yap
+        </button>
+        <p class="form-disclaimer">
+            Bilgileriniz 6698 sayılı KVKK kapsamında korunmaktadır.
+        </p>
+    </form>
+</div>
+
+<style>
+    .sticky-form {
+        position: sticky;
+        top: 100px;
+        padding: 2rem;
+        border-radius: 12px;
+    }
+
+    h3 {
+        margin-bottom: 0.5rem;
+        font-size: 1.4rem;
+    }
+
+    p {
+        font-size: 0.9rem;
+        color: #666;
+        margin-bottom: 1.5rem;
+    }
+
+    .application-form {
+        display: flex;
+        flex-direction: column;
+        gap: 1.2rem;
+    }
+
+    .form-group {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+
+    label {
+        font-size: 0.85rem;
+        font-weight: 600;
+        color: var(--primary-blue);
+    }
+
+    input,
+    select,
+    textarea {
+        padding: 0.8rem;
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        border-radius: 6px;
+        font-size: 0.95rem;
+        font-family: inherit;
+        transition: var(--transition-fast);
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+        outline: none;
+        border-color: var(--primary-blue);
+        box-shadow: 0 0 0 3px rgba(0, 86, 179, 0.1);
+    }
+
+    .full-width {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+</style>
+
+<script>
+    const form = document.getElementById("treatmentForm") as HTMLFormElement;
+
+    if (form) {
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+
+            const submitBtn = form.querySelector(
+                'button[type="submit"]',
+            ) as HTMLButtonElement;
+            const originalText = submitBtn.innerText;
+
+            try {
+                submitBtn.innerText = "Gönderiliyor...";
+                submitBtn.disabled = true;
+
+                const formData = new FormData(form);
+                const object = Object.fromEntries(formData);
+                const json = JSON.stringify(object);
+
+                const response = await fetch(
+                    "https://api.web3forms.com/submit",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json",
+                            Accept: "application/json",
+                        },
+                        body: json,
+                    },
+                );
+
+                const result = await response.json();
+
+                if (response.status === 200) {
+                    window.location.href = "/tesekkurler";
+                } else {
+                    console.error("Submission failed:", result.message);
+                    alert("Bir hata oluştu. Lütfen tekrar deneyin.");
+                }
+            } catch (error) {
+                console.error("Error submitting form:", error);
+                alert("Bağlantı hatası. Lütfen internetinizi kontrol edin.");
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    }
+</script>
