@@ -1,0 +1,145 @@
+---
+import { Eye } from "lucide-react";
+
+interface Props {
+    title: string;
+    description: string;
+    href: string;
+}
+
+const { title, description, href } = Astro.props;
+---
+
+<a href={href} class="treatment-card">
+    <div class="card-accent"></div>
+    <div class="card-inner">
+        <div class="icon-section">
+            <div class="icon-container">
+                <Eye size={32} />
+            </div>
+        </div>
+        <div class="info-section">
+            <h3>{title}</h3>
+            <p>{description}</p>
+            <div class="card-footer">
+                <span class="learn-more">İncele</span>
+                <span class="arrow">&rarr;</span>
+            </div>
+        </div>
+    </div>
+</a>
+
+<style>
+    .treatment-card {
+        background: var(--white);
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0, 86, 179, 0.05);
+        display: block;
+        transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        border: 1px solid rgba(0, 86, 179, 0.08);
+        text-decoration: none;
+        position: relative;
+        overflow: hidden;
+        height: 100%;
+    }
+
+    .card-accent {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: var(--primary-blue);
+        opacity: 0;
+        transition: opacity 0.3s ease;
+    }
+
+    .card-inner {
+        padding: 2.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+        height: 100%;
+    }
+
+    .icon-section {
+        display: flex;
+        align-items: center;
+    }
+
+    .icon-container {
+        width: 64px;
+        height: 64px;
+        background: var(--secondary-blue);
+        color: var(--primary-blue);
+        border-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition:
+            transform 0.4s ease,
+            background 0.4s ease;
+    }
+
+    .treatment-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 20px 40px rgba(0, 86, 179, 0.12);
+        border-color: var(--primary-blue);
+    }
+
+    .treatment-card:hover .card-accent {
+        opacity: 1;
+    }
+
+    .treatment-card:hover .icon-container {
+        transform: rotate(5deg) scale(1.1);
+        background: var(--primary-blue);
+        color: white;
+    }
+
+    .treatment-card h3 {
+        margin: 0;
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--primary-blue);
+        line-height: 1.3;
+        margin-bottom: 0.75rem;
+    }
+
+    .treatment-card p {
+        font-size: 0.95rem;
+        line-height: 1.6;
+        color: #555;
+        margin: 0;
+        flex: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+    }
+
+    .card-footer {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .learn-more {
+        font-weight: 700;
+        color: var(--accent-green);
+        font-size: 0.95rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .arrow {
+        color: var(--accent-green);
+        font-size: 1.2rem;
+        transition: transform 0.3s ease;
+    }
+
+    .treatment-card:hover .arrow {
+        transform: translateX(6px);
+    }
+</style>

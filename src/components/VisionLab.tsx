@@ -13,14 +13,16 @@ import RealitySimulator from './VisionModules/RealitySimulator';
 import AcuityTest from './VisionModules/AcuityTest';
 import ColorTest from './VisionModules/ColorTest';
 import DistortionGrid from './VisionModules/DistortionGrid';
+import ContrastTest from './VisionModules/ContrastTest';
 
 const VisionLab: React.FC = () => {
-    const [activeTab, setActiveTab] = useState<'acuity' | 'color' | 'distortion' | 'simulator'>('simulator');
+    const [activeTab, setActiveTab] = useState<'acuity' | 'color' | 'distortion' | 'simulator' | 'contrast'>('simulator');
 
     const tabs = [
         { id: 'simulator', name: 'Gerçeklik Simülatörü', icon: Eye, description: 'Göz hastalıklarını deneyimleyin' },
         { id: 'acuity', name: 'Keskinlik Laboratuvarı', icon: Search, description: 'Görüş netliğinizi test edin' },
         { id: 'color', name: 'Renk Krallığı', icon: Palette, description: 'Renk hassasiyetinizi ölçün' },
+        { id: 'contrast', name: 'Kontrast Testi', icon: Zap, description: 'Ayırt etme yeteneği' },
         { id: 'distortion', name: 'Distorsiyon Ağı', icon: Grid, description: 'Merkezi görme kontrolü' },
     ] as const;
 
@@ -54,6 +56,7 @@ const VisionLab: React.FC = () => {
                     {activeTab === 'simulator' && <RealitySimulator />}
                     {activeTab === 'acuity' && <AcuityTest />}
                     {activeTab === 'color' && <ColorTest />}
+                    {activeTab === 'contrast' && <ContrastTest />}
                     {activeTab === 'distortion' && <DistortionGrid />}
                 </div>
             </div>

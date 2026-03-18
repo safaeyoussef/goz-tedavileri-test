@@ -3,17 +3,69 @@ import Layout from "../../layouts/Layout.astro";
 import Header from "../../components/Header.astro";
 import Footer from "../../components/Footer.astro";
 import WhatsAppButton from "../../components/WhatsAppButton.astro";
-import TreatmentCard from "../../components/TreatmentCard.astro";
+import TreatmentCardDetailed from "../../components/TreatmentCardDetailed.astro";
 import { treatments } from "../../data/treatments";
+const categorizedTreatments = [
+    {
+        name: "Lazer & Akıllı Mercek",
+        desc: "Gözlük ve lenslerden kurtulup net bir dünya ile tanışın.",
+        items: treatments.filter((t) =>
+            [
+                "smile",
+                "lasik",
+                "akilli-mercek",
+                "no-touch-laser",
+                "icv-lazer",
+                "trifokal-mercek",
+            ].includes(t.slug),
+        ),
+    },
+    {
+        name: "Cerrahi & Retina",
+        desc: "Kritik göz operasyonlarında uzman müdahaleler.",
+        items: treatments.filter((t) =>
+            [
+                "vitrektomi",
+                "katarakt",
+                "retina-dekolmani",
+                "kornea-nakli",
+                "goz-arkasi-enjeksiyon",
+            ].includes(t.slug),
+        ),
+    },
+    {
+        name: "Estetik & Okuloplasti",
+        desc: "Göz çevresi estetiği ve kapak cerrahisinde profesyonel çözümler.",
+        items: treatments.filter((t) =>
+            ["okuloplasti", "blefaroplasti", "protez-goz"].includes(t.slug),
+        ),
+    },
+    {
+        name: "Tıbbi Göz Bakımı",
+        desc: "Tüm göz hastalıkları için modern tanı ve tedavi yöntemleri.",
+        items: treatments.filter((t) =>
+            [
+                "glokom",
+                "keratokonus",
+                "sasilik",
+                "pterijium",
+                "bebek-goz-muayenesi",
+                "uveit",
+                "goz-kurulugu",
+            ].includes(t.slug),
+        ),
+    },
+];
 ---
 
 <Layout
-    title="Göz Tedavileri ve Operasyonları"
-    description="İzmir'deki kliniğimizde uygulanan 21 farklı göz tedavisi ve cerrahi yöntem hakkında detaylı bilgi."
+    title="Göz Tedavileri ve Operasyonları | Profesyonel Göz Merkezi"
+    description="İzmir'deki kliniğimizde uygulanan 21 farklı göz tedavisi ve cerrahi yöntem hakkında detaylı bilgi. SMILE, LASIK, Akıllı Mercek ve daha fazlası."
 >
     <Header />
 
     <main>
+        <!-- Original Hero Section - DO NOT CHANGE per user request -->
         <section class="treatments-hero">
             <div class="container center">
                 <h1>Tüm Göz Tedavileri</h1>
@@ -24,20 +76,32 @@ import { treatments } from "../../data/treatments";
             </div>
         </section>
 
-        <section class="all-treatments">
+        <!-- Categorized Listings -->
+        <section class="categorized-listings">
             <div class="container">
-                <div class="treatments-grid">
-                    {
-                        treatments.map((item) => (
-                            <TreatmentCard
-                                title={item.title}
-                                description={item.description}
-                                href={`/tedaviler/${item.slug}`}
-                                icon={item.icon}
-                            />
-                        ))
-                    }
-                </div>
+                {
+                    categorizedTreatments.map(
+                        (category) =>
+                            category.items.length > 0 && (
+                                <div class="category-block">
+                                    <div class="category-info">
+                                        <div class="deco-dot" />
+                                        <h2>{category.name}</h2>
+                                        <p>{category.desc}</p>
+                                    </div>
+                                    <div class="treatments-grid">
+                                        {category.items.map((item) => (
+                                            <TreatmentCardDetailed
+                                                title={item.title}
+                                                description={item.description}
+                                                href={`/tedaviler/${item.slug}`}
+                                            />
+                                        ))}
+                                    </div>
+                                </div>
+                            ),
+                    )
+                }
             </div>
         </section>
     </main>
@@ -47,6 +111,7 @@ import { treatments } from "../../data/treatments";
 </Layout>
 
 <style>
+    /* Original Hero Style */
     .treatments-hero {
         padding: 6rem 0 3rem;
         background-color: var(--secondary-blue);
@@ -64,25 +129,73 @@ import { treatments } from "../../data/treatments";
         margin: 0 auto;
     }
 
-    .all-treatments {
-        padding: 4rem 0 8rem;
+    /* New Categorized Layout Styles */
+    .categorized-listings {
+        padding: 6rem 0 10rem;
+        background: #fdfdfe;
+    }
+
+    .category-block {
+        margin-bottom: 7rem;
+    }
+
+    .category-block:last-child {
+        margin-bottom: 0;
+    }
+
+    .category-info {
+        margin-bottom: 5rem;
+        position: relative;
+    }
+
+    .deco-dot {
+        width: 12px;
+        height: 12px;
+        background: var(--accent-green);
+        border-radius: 50%;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 0 15px rgba(0, 200, 83, 0.3);
+    }
+
+    .category-info h2 {
+        font-size: 2.25rem;
+        font-weight: 800;
+        color: var(--primary-blue);
+        margin-bottom: 0.5rem;
+        letter-spacing: -0.02em;
+    }
+
+    .category-info p {
+        font-size: 1.15rem;
+        color: #666;
+        max-width: 600px;
     }
 
     .treatments-grid {
         display: grid;
         grid-template-columns: repeat(3, 1fr);
-        gap: 2rem;
+        gap: 2.5rem;
     }
 
-    @media (max-width: 992px) {
+    @media (max-width: 1100px) {
         .treatments-grid {
             grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
         }
     }
 
-    @media (max-width: 576px) {
+    @media (max-width: 768px) {
+        .category-info h2 {
+            font-size: 1.75rem;
+        }
+        .category-info p {
+            font-size: 1rem;
+        }
         .treatments-grid {
             grid-template-columns: 1fr;
+        }
+        .category-block {
+            margin-bottom: 5rem;
         }
     }
 </style>
