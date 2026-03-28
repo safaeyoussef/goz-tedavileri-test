@@ -23,6 +23,7 @@ function isActive(href: string): boolean {
                 alt="Göz Tedavileri Logo"
                 class="logo-img"
             />
+            <span class="logo-text">Göz Tedavileri</span>
         </a>
         <nav class="nav">
             <ul class="nav-list">
@@ -79,6 +80,10 @@ function isActive(href: string): boolean {
         width: auto;
         display: block;
         image-rendering: -webkit-optimize-contrast;
+    }
+
+    .logo-text {
+        white-space: nowrap;
     }
 
     .nav-list {
@@ -146,6 +151,9 @@ function isActive(href: string): boolean {
         }
         .logo-img {
             height: 48px;
+        }
+        .logo-text {
+            font-size: 1.25rem;
         }
     }
 </style>
