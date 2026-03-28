@@ -4,7 +4,7 @@ import sitemap from '@astrojs/sitemap';
 
 // https://astro.build/config
 export default defineConfig({
-  site: 'https://goztedavileri.com',
+  site: 'https://goz-tedavileri-test.vercel.app',
   i18n: {
     defaultLocale: 'tr',
     locales: ['tr'],
